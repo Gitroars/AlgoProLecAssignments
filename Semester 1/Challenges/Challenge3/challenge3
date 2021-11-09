@@ -1,0 +1,13 @@
+isCapital = True
+stringInput = (input("Input a string : "))
+newString = ""
+
+for i in stringInput:
+
+     if(isCapital == True):
+          newString += i.upper()
+     elif(isCapital == False):
+          newString += i.lower()
+     isCapital = not isCapital
+
+print(newString)
