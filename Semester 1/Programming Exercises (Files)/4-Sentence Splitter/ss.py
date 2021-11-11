@@ -17,9 +17,9 @@ for x in shortInternal:
      i = shortInternal.index(x)
      defaultInput = defaultInput.replace(x,longInternal[i])
 
-defaultInput = defaultInput.replace(". ", ".\n ")
-defaultInput = defaultInput.replace("?", "?\n ")
-defaultInput = defaultInput.replace("!", "!\n ")
+defaultInput = defaultInput.replace(". ", ".\n")
+defaultInput = defaultInput.replace("?", "?\n")
+defaultInput = defaultInput.replace("!", "!\n")
 
 for x in longTitles:
     i = longTitles.index(x)
