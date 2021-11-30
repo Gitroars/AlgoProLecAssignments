@@ -16,7 +16,7 @@ def numAtoms(aG,wE=196.97):
   #Calculate number of atoms by multiplying Avogadro's number with moles
   numAtoms=aN*moles
   return numAtoms
-  
+
 amountOfElement = int(input("Enter the amount of the element in grams: "))
 isSkip = eval(input("Input 0 to enter atomic weight of element\nInput 1 to skip the input of atomic weight of element\n")) #skip input
 if(isSkip ==0):
