@@ -1,8 +1,10 @@
 class Master:
     #CLASS MODULE
     def __init__(self,name,amount):
+        #Gives initial value based on parameter
         self.__name = name
         self.__amount = amount
+        #Gives initial value of 0
         self.__staPrice = 0.00
         self.__calPrice = 0.00
 
