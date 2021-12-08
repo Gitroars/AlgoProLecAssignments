@@ -4,19 +4,19 @@ from foodParentAY import Master #imports the class from the other script
 def CreateListObjectsAY():
     li=[] #an empty list
     numberOfItems = int(input("Enter the number of items: "))
-    while numberOfItems<=0: #Verify if number of items is more than 1
+    while numberOfItems<=0: #Verify if number of items is more than 0
         print("Number of items must be at least 1.") #Warn the user for correct input
         numberOfItems = int(input("Enter the number of items: ")) #Allows the user to input again
-    if numberOfItems >=1:
-        for x in range(numberOfItems):
-            print(f"Item #{x+1}") #Order number
+    if numberOfItems >=1: #Verify if number of items is at least 1
+        for x in range(numberOfItems): #For every time,
+            print(f"Item #{x+1}") #print the item order number
             name = input("Enter food:")
             amount = float(input("Enter amount of pounds:"))
             while amount <= 0: #Verify if amount of pounds is not greater than 0
                 print('Amount of pounds must be greater than 0.') #Warns the user for correct input
                 amount = float(input("Enter amount of pounds:")) #Allows the user to input again
             child = Master(name,amount) #Creates a new child object using user's input data
-            Master.CalculateCostAY(child)
+            Master.CalculateCostAY(child) #Calculate the cost of the recently created object
             li.append(child) #Adds the newly created object to the list
         return li #gives the value to the global list
 
@@ -32,8 +32,8 @@ def DisplayContentAY(list): #Summary for Items Purchased
         x+=1
 
 def CalculateTotalCostAY(list):
-    totalCost = 0
-    i = 0
+    totalCost = 0 #declare the local total cost with the value of 0
+    i = 0 #index
     while i<len(list): #at every item,
         totalCost += list[i].getCalPriceAY() #increase total cost by the calculated price
         i+=1
