@@ -5,7 +5,7 @@ class Master:
         self.__staPrice = 0.00
         self.__calPrice = 0.00
 
-
+   #FUNCTIONS to get the value of an attribute
     def getNameAY(self):
         return self.__name
 
@@ -18,7 +18,7 @@ class Master:
     def getCalPriceAY(self):
         return self.__calPrice
     
-    def __PriceListAY(self):
+    def __PriceListAY(self): #Sets the standard price for a child object
      if self.__name == "Dry Cured Iberian Ham":
         self.__staPrice = 177.80
      elif self.__name == "Wagyu Steaks":
@@ -40,6 +40,7 @@ class Master:
 
     def CalculateCostAY(self):
      self.__PriceListAY()
+     # To find the calculated price
      self.__calPrice = self.__staPrice*self.__amount
 
     

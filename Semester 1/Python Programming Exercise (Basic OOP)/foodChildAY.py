@@ -1,15 +1,15 @@
 
-from foodParentAY import Master
+from foodParentAY import Master #imports the class from the other script
 
 def CreateListObjectsAY():
-    li=[]
+    li=[] #an empty list
     numberOfItems = int(input("Enter the number of items: "))
-    while numberOfItems<=0:
-        print("Number of items must be at least 1.")
-        numberOfItems = int(input("Enter the number of items: "))
+    while numberOfItems<=0: #Verify if number of items is more than 1
+        print("Number of items must be at least 1.") #Warn the user for correct input
+        numberOfItems = int(input("Enter the number of items: ")) #Allows the user to input again
     if numberOfItems >=1:
         for x in range(numberOfItems):
-            print(f"Item #{x+1}")
+            print(f"Item #{x+1}") #Order number
             name = input("Enter food:")
             amount = float(input("Enter amount of pounds:"))
             while amount <= 0:
@@ -17,7 +17,7 @@ def CreateListObjectsAY():
                 amount = float(input("Enter amount of pounds:"))
             child = Master(name,amount)
             Master.CalculateCostAY(child)
-            li.append(child)
+            li.append(child) #Adds the newly created object to the list
         return li
 
 
@@ -27,8 +27,8 @@ def DisplayContentAY(list):
     while x<len(list):
         print("Item: ",list[x].getNameAY())
         print(f"Amount ordered: {list[x].getAmountAY()} pounds")
-        print(f"Price per pound: ${list[x].getStaPriceAY()}")
-        print(f"Price of order: ${list[x].getCalPriceAY()} \n")
+        print(f"Price per pound: ${list[x].getStaPriceAY():.2f}")
+        print(f"Price of order: ${list[x].getCalPriceAY():.2f} \n")
         x+=1
 
 def CalculateTotalCostAY(list):
@@ -37,6 +37,7 @@ def CalculateTotalCostAY(list):
     while i<len(list):
         totalCost += list[i].getCalPriceAY()
         i+=1
+
     return totalCost
 
 
@@ -44,7 +45,7 @@ def main():
     myList = CreateListObjectsAY()
     DisplayContentAY(myList)
     myTotalCost = CalculateTotalCostAY(myList)
-    print(f"Total Cost: ${myTotalCost}")
+    print(f"Total Cost: ${myTotalCost:.2f}")
 
 main() #Call the functions
 
