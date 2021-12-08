@@ -10,8 +10,8 @@ def CreateListObjectsAY():
     if numberOfItems >=1: #Verify if number of items is at least 1
         for x in range(numberOfItems): #For every time,
             print(f"Item #{x+1}") #print the item order number
-            name = input("Enter food:")
-            amount = float(input("Enter amount of pounds:"))
+            name = input("Enter food: ")
+            amount = float(input("Enter amount of pounds: "))
             while amount <= 0: #Verify if amount of pounds is not greater than 0
                 print('Amount of pounds must be greater than 0.') #Warns the user for correct input
                 amount = float(input("Enter amount of pounds:")) #Allows the user to input again
