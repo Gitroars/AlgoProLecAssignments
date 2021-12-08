@@ -1,4 +1,5 @@
 class Master:
+    #CLASS MODULE
     def __init__(self,name,amount):
         self.__name = name
         self.__amount = amount
@@ -17,8 +18,9 @@ class Master:
 
     def getCalPriceAY(self):
         return self.__calPrice
-    
-    def __PriceListAY(self): #Sets the standard price for a child object
+
+    # A private method which sets the standard price for a child object(item) depending on it's name
+    def __PriceListAY(self):
      if self.__name == "Dry Cured Iberian Ham":
         self.__staPrice = 177.80
      elif self.__name == "Wagyu Steaks":
@@ -37,10 +39,10 @@ class Master:
         self.__staPrice = 270.81
      else:
         self.__staPrice = 0.00
-
+     # A public method which calls the private method and modify calculated price (which is 0 by default)
     def CalculateCostAY(self):
      self.__PriceListAY()
-     # To find the calculated price
+     #Calculates using the formula of standard price multiplies by amount
      self.__calPrice = self.__staPrice*self.__amount
 
     
