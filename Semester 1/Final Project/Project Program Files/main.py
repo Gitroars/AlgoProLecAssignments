@@ -1,13 +1,14 @@
 import random
 import time
 
-import pygame, sys
+import pygame, sys,os
 from random import randrange
 import string
 
 from ships import Player
 from letterTile import *
 
+MUSIC_END = pygame.USEREVENT + 1
 
 class Game:
 
@@ -23,7 +24,7 @@ class Game:
         self.dpbg = pygame.transform.scale(darkPurpleBackground,(1280,720))
 
         # Player setup
-        playerSprite = Player((screen_width / 2, screen_height), screen_width, 7.5)
+        playerSprite = Player((screen_width / 2, screen_height - 50), screen_width, 7.5)
         self.player = pygame.sprite.GroupSingle(playerSprite)
 
         #Word setup
@@ -63,23 +64,17 @@ class Game:
         self.tilesY = pygame.sprite.Group()
         self.tilesZ = pygame.sprite.Group()
 
-
-
-
         # Health and Score setup
         self.myfont = pygame.font.SysFont("arial", 50)
         self.heartImg = pygame.image.load("PNG/UI/heart.png")
         self.life = 3
         self.score = 0
 
-
-
-
-
         # Background Music Setup
-        music = pygame.mixer.Sound("BGM/Risen.wav")
-        music.set_volume(0.2)
-        music.play(loops=-1)
+        self.musics = []
+        for file in os.listdir("BGM"): #Loop through BGM directory and add all files inside to a music list
+            self.musics.append(file)
+        self.playMusic()
         # Correct Tile Collection Sound Effect
         self.correct_sound = pygame.mixer.Sound("SFX/sfx_zap.ogg")
         self.correct_sound.set_volume(0.4)
@@ -90,6 +85,7 @@ class Game:
         self.lose_sound = pygame.mixer.Sound("SFX/sfx_lose.ogg")
         self.lose_sound.set_volume(0.5)
 
+
     def display_score(self):
         self.scoreText = self.myfont.render(str(self.score),True,(255,255,255))
         screen.blit(self.scoreText,(0,50))
@@ -97,7 +93,24 @@ class Game:
         self.lifeText = self.myfont.render(str(self.life),True,(255,255,255))
         screen.blit(self.heartImg,(screen_width-200,50))
         screen.blit(self.lifeText,(screen_width-100,75))
-
+    def display_target(self):
+        distance = 0
+        distanceCharNum = 35
+        distanceScoreCharNum = 100
+        for char in self.lettersChar:
+            distance += 40
+            screen.blit(self.myfont.render(char, True, (255, 255, 0)), (0, distanceScoreCharNum + distance))
+        distance = 0
+        for num in self.currentNum:
+            distance += 40
+            screen.blit(self.myfont.render(str(num) + "/", True, (255, 255, 255)),
+                        (distanceCharNum, distanceScoreCharNum + distance))
+        distance = 0
+        for num in self.lettersNum:
+            distance += 40
+            screen.blit(self.myfont.render(str(num), True, (255, 255, 255)),
+                        (distanceCharNum * 2, distanceScoreCharNum + distance))
+        screen.blit(self.randomText, (0, 0))
 
     def generate_word(self):
         if self.word_ready:
@@ -126,21 +139,7 @@ class Game:
          self.word_ready = False
 
         else:
-            distance = 0
-            distanceCharNum = 35
-            distanceScoreCharNum = 100
-            for char in self.lettersChar:
-                distance += 40
-                screen.blit(self.myfont.render(char, True, (255, 255, 0)), (0,distanceScoreCharNum+ distance))
-            distance = 0
-            for num in self.currentNum:
-                distance += 40
-                screen.blit(self.myfont.render(str(num)+"/", True, (255, 255, 255)),( distanceCharNum, distanceScoreCharNum+distance))
-            distance = 0
-            for num in self.lettersNum:
-                distance += 40
-                screen.blit(self.myfont.render(str(num), True, (255, 255, 255)), ( distanceCharNum*2,distanceScoreCharNum+distance))
-            screen.blit(self.randomText, (0, 0))
+            self.display_target()
 
     def generate_tile(self):
 
@@ -267,8 +266,15 @@ class Game:
         if self.life == 0:
             self.endGame()
         self.explosion_sound.play()
-    def tileEscape(self):
-        self.life -=1
+    def playMusic(self):
+
+
+        randomMusic = random.choice(self.musics)
+        currentMusic = pygame.mixer.Sound("BGM/"+randomMusic)
+        currentMusic.set_volume(0.2)
+        currentMusic.play()
+
+
 
     #Checks if a tile is hit by a laser
     def checkCollisionBetweenTileAndLaser(self):
@@ -394,6 +400,8 @@ class Game:
             self.badCollide()
          stateCollided = False
 
+
+
     def background(self):
         screen.blit(self.bluebg, (0, 0))
 
@@ -419,15 +427,20 @@ class Game:
          self.checkCollissionBetweenTileAndPlayer()
          self.checkCollisionBetweenTileAndLaser()
 
+
     def endGame(self):
         self.lose_sound.play()
         endText = self.myfont.render("GAME OVER",True,(200,200,200))
         scoreText = self.myfont.render("Score: "+str(self.score),True,(255,255,255))
-        screen.blit(self.dpbg,(0,0))
-        screen.blit(endText,(screen_width/2 ,screen_height/2 ))
-        screen.blit(scoreText,(screen_width/2,screen_height/2+100))
+        screen.blit(self.dpbg,(0,0)) #Change background to dark purple
+        screen.blit(endText,(screen_width/2 ,screen_height/2 )) #Shows that the game is over
+        screen.blit(scoreText,(screen_width/2,screen_height/2+100)) #displays the session's score
+        #Reset back to default, in preparation of new game session
+        self.life = 3
+        self.score = 0
         for x in self.tiles:
             x.kill()
+        #Current game state is game over
         self.game_over = True
 
 
@@ -460,6 +473,9 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+
+
 
 
         game.run()

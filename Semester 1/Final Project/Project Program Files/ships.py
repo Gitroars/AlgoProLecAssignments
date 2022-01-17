@@ -5,14 +5,17 @@ from laser import Laser
 class Player(pygame.sprite.Sprite):
     def __init__(self,pos,constraint,speed):
         super().__init__()
+        #Object Body
         self.image = pygame.image.load("PNG/playerShip1_red.png").convert_alpha()
         self.rect = self.image.get_rect(midbottom = pos)
         self.speed = speed
+        #Boundary Limit
         self.max_x_constraint = constraint
+        # Laser Reloading
         self.ready = True
         self.laser_time = 0
         self.laser_cooldown = 600
-
+        #Laser Group
         self.lasers = pygame.sprite.Group()
         #Audio
         self.laser_sound = pygame.mixer.Sound("SFX/sfx_laser2.ogg")

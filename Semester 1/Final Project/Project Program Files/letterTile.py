@@ -1,6 +1,6 @@
 import random
 import pygame
-from main import Game
+
 
 class LetterTile(pygame.sprite.Sprite):
     subclasses = []
