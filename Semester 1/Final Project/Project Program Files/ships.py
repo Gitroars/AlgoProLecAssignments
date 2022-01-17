@@ -27,14 +27,14 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_RIGHT]:
-            self.rect.x += self.speed
+            self.rect.x += self.speed #move right
         elif keys[pygame.K_LEFT]:
-            self.rect.x -= self.speed
+            self.rect.x -= self.speed #move left
 
         if keys[pygame.K_SPACE] and self.ready:
             self.shoot_laser()
             self.ready = False
-            self.laser_time = pygame.time.get_ticks()
+            self.laser_time = pygame.time.get_ticks() #mark the time
 
     def recharge(self):
         if not self.ready:

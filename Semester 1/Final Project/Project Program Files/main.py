@@ -145,7 +145,7 @@ class Game:
 
          if self.tile_ready:
            randomInt = random.randrange(len(LetterTile.subclasses))
-           # Creates a tile object on the letter group, and add the corresponding group to the main tile group
+           #            # Creates a tile object on the letter group, and add the corresponding group to the main tile group
            if randomInt == 0:
                self.tilesA.add(LetterA())
                self.tiles.add(self.tilesA)
