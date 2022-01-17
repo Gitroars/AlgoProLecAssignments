@@ -399,7 +399,10 @@ class Game:
          else:
             self.badCollide()
          stateCollided = False
-
+    def checkMusicPlaying(self):
+        if pygame.mixer.get_busy() == False:
+            print('get new song')
+            self.playMusic()
 
 
     def background(self):
@@ -426,6 +429,8 @@ class Game:
          #Collission check
          self.checkCollissionBetweenTileAndPlayer()
          self.checkCollisionBetweenTileAndLaser()
+        #Check if music stream is playing
+         self.checkMusicPlaying()
 
 
     def endGame(self):
@@ -435,13 +440,7 @@ class Game:
         screen.blit(self.dpbg,(0,0)) #Change background to dark purple
         screen.blit(endText,(screen_width/2 ,screen_height/2 )) #Shows that the game is over
         screen.blit(scoreText,(screen_width/2,screen_height/2+100)) #displays the session's score
-        #Reset back to default, in preparation of new game session
-        self.life = 3
-        self.score = 0
-        for x in self.tiles:
-            x.kill()
-        #Current game state is game over
-        self.game_over = True
+
 
 
 
@@ -460,25 +459,12 @@ if __name__ == '__main__':
     clock = pygame.time.Clock() #Object to keep track of time
     game = Game()
 
-
-
-
-
-
-
     while True:
-
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-
-
-
-
         game.run()
-
         pygame.display.flip() #Update entire display screen
         clock.tick(60) #Framerate is at 60fps
+
