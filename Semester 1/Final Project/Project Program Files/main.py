@@ -1,14 +1,12 @@
-import random
-import time
 
 import pygame, sys,os
-from random import randrange
+
 import string
 
 from ships import Player
 from letterTile import *
 
-MUSIC_END = pygame.USEREVENT + 1
+
 
 class Game:
 
@@ -94,9 +92,9 @@ class Game:
         screen.blit(self.heartImg,(screen_width-200,50))
         screen.blit(self.lifeText,(screen_width-100,75))
     def display_target(self):
-        distance = 0
-        distanceCharNum = 35
-        distanceScoreCharNum = 100
+        distance = 0 #between rows
+        distanceCharNum = 35 #between columns
+        distanceScoreCharNum = 100 #to be away from the score text
         for char in self.lettersChar:
             distance += 40
             screen.blit(self.myfont.render(char, True, (255, 255, 0)), (0, distanceScoreCharNum + distance))
@@ -124,10 +122,10 @@ class Game:
          self.letters = {} #Initialize a dictionary for amount of characters
 
          for char in self.randomWord:
-             self.letters[char] = self.letters.get(char,0)+1
+             self.letters[char] = self.letters.get(char,0)+1 #Create a key-value(letter-amount of said letter) from selected word
 
-         self.lettersChar = sorted(self.letters.keys())
-         self.lettersNum = []
+         self.lettersChar = sorted(self.letters.keys()) #an alphabetically ordered list
+         self.lettersNum = [] #the value list for ordered letter list
          for char in self.lettersChar:
              self.lettersNum.append(self.letters.get(char))
 
@@ -257,18 +255,18 @@ class Game:
             if finishedNum == totalNum: #Once all the required amount of letters are collected, which is determined by a match between completion index and length of number list
                 self.word_ready = True #choose a new random word
 
+    #Scorepoints and SFX upon laser collission
     def goodLaserCollide(self):
         self.score += 10
         self.explosion_sound.play()
-
+    #Penalties and SFX upon physical collisison
     def badCollide(self):
         self.life -=1
         if self.life == 0:
             self.endGame()
         self.explosion_sound.play()
+    #Play random music endlessly(a random one once current music is over)
     def playMusic(self):
-
-
         randomMusic = random.choice(self.musics)
         currentMusic = pygame.mixer.Sound("BGM/"+randomMusic)
         currentMusic.set_volume(0.2)
@@ -404,7 +402,7 @@ class Game:
             print('get new song')
             self.playMusic()
 
-
+    #Put background on screen
     def background(self):
         screen.blit(self.bluebg, (0, 0))
 
@@ -440,13 +438,6 @@ class Game:
         screen.blit(self.dpbg,(0,0)) #Change background to dark purple
         screen.blit(endText,(screen_width/2 ,screen_height/2 )) #Shows that the game is over
         screen.blit(scoreText,(screen_width/2,screen_height/2+100)) #displays the session's score
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     pygame.init()
