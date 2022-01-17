@@ -14,22 +14,17 @@ class Game:
 
     def __init__(self):
         self.game_over = False
-
         #Background setup
         blueBackground = pygame.image.load("Backgrounds/blue.png")
         darkPurpleBackground = pygame.image.load("Backgrounds/darkPurple.png")
         self.bluebg = pygame.transform.scale(blueBackground, (1280, 720))
         self.dpbg = pygame.transform.scale(darkPurpleBackground,(1280,720))
-
         # Player setup
         playerSprite = Player((screen_width / 2, screen_height - 50), screen_width, 7.5)
         self.player = pygame.sprite.GroupSingle(playerSprite)
-
         #Word setup
-
         self.word_ready = True
         #Tile Setup
-
         self.tile_ready = True
         self.tile_time = 0
         self.tile_cooldown = 1500
@@ -61,13 +56,11 @@ class Game:
         self.tilesX = pygame.sprite.Group()
         self.tilesY = pygame.sprite.Group()
         self.tilesZ = pygame.sprite.Group()
-
         # Health and Score setup
         self.myfont = pygame.font.SysFont("arial", 50)
         self.heartImg = pygame.image.load("PNG/UI/heart.png")
         self.life = 3
         self.score = 0
-
         # Background Music Setup
         self.musics = []
         for file in os.listdir("BGM"): #Loop through BGM directory and add all files inside to a music list
@@ -140,10 +133,9 @@ class Game:
             self.display_target()
 
     def generate_tile(self):
-
          if self.tile_ready:
            randomInt = random.randrange(len(LetterTile.subclasses))
-           #            # Creates a tile object on the letter group, and add the corresponding group to the main tile group
+           # Creates a tile object on the letter group, and add the corresponding group to the main tile group
            if randomInt == 0:
                self.tilesA.add(LetterA())
                self.tiles.add(self.tilesA)
@@ -222,10 +214,8 @@ class Game:
            elif randomInt == 25:
                self.tilesZ.add(LetterZ())
                self.tiles.add(self.tilesZ)
-
            self.tile_ready = False
            self.tile_time = pygame.time.get_ticks()
-
          elif not self.tile_ready:
             current_time = pygame.time.get_ticks()
             if current_time - self.tile_time >= self.tile_cooldown:
@@ -285,8 +275,6 @@ class Game:
     def checkCollissionBetweenTileAndPlayer(self):
         stateCollided = False
         self.collidedLetter = ""
-
-
         if pygame.sprite.groupcollide(self.tilesA,self.player,True,False):
             self.collidedLetter = "A"
             stateCollided = True
@@ -390,13 +378,13 @@ class Game:
         if pygame.sprite.groupcollide(self.tilesZ, self.player, True, False):
             self.collidedLetter = "Z"
             stateCollided = True
-
         if stateCollided:
          if self.collidedLetter in self.letters :
             self.goodShipCollide()
          else:
             self.badCollide()
          stateCollided = False
+
     def checkMusicPlaying(self):
         if pygame.mixer.get_busy() == False:
             print('get new song')
@@ -432,6 +420,7 @@ class Game:
 
 
     def endGame(self):
+        self.game_over = True
         self.lose_sound.play()
         endText = self.myfont.render("GAME OVER",True,(200,200,200))
         scoreText = self.myfont.render("Score: "+str(self.score),True,(255,255,255))
